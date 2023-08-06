@@ -1,7 +1,6 @@
 <template>
-  <div class="w-full h-screen flex justify-center items-center">
-    <h1 class="text-100px font-bold select-none">PROTOMIND</h1>
-    
+  <div class="w-full">
+    <Aside />
   </div>
 </template>
 
@@ -10,9 +9,9 @@ const state = useDataStore();
 </script>
 
 
-<style> 
+<style>
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 </style>
