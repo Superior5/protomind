@@ -114,31 +114,31 @@ export default {
       type: Array,
       default: () => [
         {
-          link: "/about",
+          link: "/dashboard",
           name: "Дашборд",
           tooltip: "Dashboard",
           icon: "bx-grid-alt",
         },
         {
-          link: "/car",
+          link: "/protocol",
           name: "Протоколы",
           tooltip: "User",
           icon: "bx-file",
         },
         {
-          link: "/home",
+          link: "/construction",
           name: "Сообщения",
           tooltip: "Messages",
           icon: "bx-chat",
         },
         {
-          link: "/about",
+          link: "/construction",
           name: "Аналитика",
           tooltip: "Analytics",
           icon: "bx-pie-chart-alt-2",
         },
         {
-          link: "/about",
+          link: "/construction",
           name: "Настройки",
           tooltip: "Setting",
           icon: "bx-cog",
@@ -171,7 +171,7 @@ export default {
     },
     profileRole: {
       type: String,
-      default: "Страший секретарь",
+      default: "Менеджер",
     },
     isExitButton: {
       type: Boolean,
@@ -231,7 +231,6 @@ export default {
   },
   mounted() {
     this.isOpened = this.isMenuOpen;
-    this.tooltipAttached();
   },
   computed: {
     cssVars() {
