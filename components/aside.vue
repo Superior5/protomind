@@ -1,40 +1,24 @@
 <template>
   <div class="sidebar" :class="isOpened ? 'open' : ''" :style="cssVars">
     <div class="logo-details" style="margin: 6px 14px 0 14px">
-      <img
-        v-if="menuLogo"
-        :src="menuLogo"
-        alt="menu-logo"
-        class="menu-logo icon"
-      />
+      <img v-if="menuLogo" :src="menuLogo" alt="menu-logo" class="menu-logo icon" />
       <div class="logo_name">
         {{ menuTitle }}
       </div>
-      <i
-        class="bx"
-        :class="isOpened ? 'bx-menu-alt-right' : 'bx-menu'"
-        id="btn"
-        @click="isOpened = !isOpened"
-      />
+      <i class="bx" :class="isOpened ? 'bx-menu-alt-right' : 'bx-menu'" id="btn" @click="isOpened = !isOpened" />
     </div>
 
-    <div
-      style="
+    <div style="
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         flex-grow: 1;
         max-height: calc(100% - 60px);
-      "
-    >
+      ">
       <div id="my-scroll" style="margin: 6px 14px 0 14px">
         <ul class="nav-list" style="overflow: visible">
 
-          <li
-            v-for="(menuItem, index) in menuItems"
-            :key="index"
-            :id="'links_' + index"
-          >
+          <li v-for="(menuItem, index) in menuItems" :key="index" :id="'links_' + index">
             <NuxtLink :to="menuItem.link">
               <i class="bx" :class="menuItem.icon || 'bx-square-rounded'" />
               <span class="links_name">{{ menuItem.name }}</span>
@@ -60,12 +44,7 @@
             </div>
           </div>
         </div>
-        <i
-          v-if="isExitButton"
-          class="bx bx-log-out"
-          id="log_out"
-          @click.stop="$emit('button-exit-clicked')"
-        />
+        <i v-if="isExitButton" class="bx bx-log-out" id="log_out" @click.stop="$emit('button-exit-clicked')" />
       </div>
     </div>
   </div>
@@ -271,9 +250,8 @@ export default {
           const targetPosition = target.getBoundingClientRect();
           if (this.isOpened) return;
           tooltip.style.top = `${targetPosition.top + window.scrollY}px`;
-          tooltip.style.left = `${
-            targetPosition.left + targetPosition.width + 20
-          }px`;
+          tooltip.style.left = `${targetPosition.left + targetPosition.width + 20
+            }px`;
           tooltip.classList.add("active");
         });
         target.addEventListener("mouseleave", () => {
@@ -292,16 +270,20 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 body {
   transition: all 0.5s ease;
 }
+
 .name_job {
   margin-bottom: 5px;
 }
+
 .menu-logo {
   width: 30px;
   margin: 0 10px 0 10px;
 }
+
 .sidebar {
   position: relative;
   display: flex;
@@ -318,19 +300,23 @@ body {
   z-index: 99;
   transition: all 0.5s ease;
 }
+
 .sidebar.open {
   width: 250px;
 }
+
 .sidebar .logo-details {
   height: 60px;
   display: flex;
   align-items: center;
   position: relative;
 }
+
 .sidebar .logo-details .icon {
   opacity: 0;
   transition: all 0.5s ease;
 }
+
 .sidebar .logo-details .logo_name {
   color: var(--logo-title-color);
   font-size: 20px;
@@ -338,10 +324,12 @@ body {
   opacity: 0;
   transition: all 0.5s ease;
 }
+
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name {
   opacity: 1;
 }
+
 .sidebar .logo-details #btn {
   position: absolute;
   top: 50%;
@@ -354,9 +342,11 @@ body {
   cursor: pointer;
   transition: all 0.5s ease;
 }
+
 .sidebar.open .logo-details #btn {
   text-align: right;
 }
+
 .sidebar i {
   color: var(--icons-color);
   height: 60px;
@@ -365,17 +355,24 @@ body {
   text-align: center;
   line-height: 60px;
 }
+
 .sidebar .nav-list {
   margin-top: 20px;
   /* margin-bottom: 60px; */
   /* height: 100%; */
   /* min-height: min-content; */
 }
+
 .sidebar li {
   position: relative;
   margin: 8px 0;
   list-style: none;
 }
+
+.sidebar .router-link-active {
+  background: #606060;
+}
+
 .tooltip {
   position: absolute;
   /* top: -20px; */
@@ -392,6 +389,7 @@ body {
   pointer-events: none;
   transition: 0s;
 }
+
 .tooltip.active {
   opacity: 1;
   pointer-events: auto;
@@ -399,9 +397,11 @@ body {
   /* top: 50%; */
   transform: translateY(25%);
 }
+
 .sidebar.open li .tooltip {
   display: none;
 }
+
 .sidebar input {
   font-size: 15px;
   color: var(--serach-input-text-color);
@@ -415,10 +415,12 @@ body {
   transition: all 0.5s ease;
   background: var(--secondary-color);
 }
+
 .sidebar.open input {
   padding: 0 20px 0 50px;
   width: 100%;
 }
+
 .sidebar .bx-search {
   position: absolute;
   top: 50%;
@@ -428,14 +430,17 @@ body {
   background: var(--secondary-color);
   color: var(--icons-color);
 }
+
 .sidebar.open .bx-search:hover {
   background: var(--secondary-color);
   color: var(--icons-color);
 }
+
 .sidebar .bx-search:hover {
   background: var(--menu-items-hover-color);
   color: var(--bg-color);
 }
+
 .sidebar li a {
   display: flex;
   height: 100%;
@@ -446,9 +451,11 @@ body {
   transition: all 0.4s ease;
   background: var(--bg-color);
 }
+
 .sidebar li a:hover {
   background: var(--menu-items-hover-color);
 }
+
 .sidebar li a .links_name {
   color: var(--menu-items-text-color);
   font-size: 15px;
@@ -458,15 +465,18 @@ body {
   pointer-events: none;
   transition: 0.4s;
 }
+
 .sidebar.open li a .links_name {
   opacity: 1;
   pointer-events: auto;
 }
+
 .sidebar li a:hover .links_name,
 .sidebar li a:hover i {
   transition: all 0.5s ease;
   color: var(--bg-color);
 }
+
 .sidebar li router-link {
   display: flex;
   height: 100%;
@@ -477,9 +487,11 @@ body {
   transition: all 0.4s ease;
   background: var(--bg-color);
 }
+
 .sidebar li router-link:hover {
   background: var(--menu-items-hover-color);
 }
+
 .sidebar li router-link .links_name {
   color: var(--menu-items-text-color);
   font-size: 15px;
@@ -489,21 +501,25 @@ body {
   pointer-events: none;
   transition: 0.4s;
 }
+
 .sidebar.open li router-link .links_name {
   opacity: 1;
   pointer-events: auto;
 }
+
 .sidebar li router-link:hover .links_name,
 .sidebar li router-link:hover i {
   transition: all 0.5s ease;
   color: var(--bg-color);
 }
+
 .sidebar li i {
   height: 50px;
   line-height: 50px;
   font-size: 18px;
   border-radius: 12px;
 }
+
 .sidebar div.profile {
   position: relative;
   height: 60px;
@@ -515,14 +531,17 @@ body {
   transition: all 0.5s ease;
   overflow: hidden;
 }
+
 .sidebar.open div.profile {
   width: 250px;
 }
+
 .sidebar div .profile-details {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
 }
+
 .sidebar div img {
   height: 45px;
   width: 45px;
@@ -530,6 +549,7 @@ body {
   border-radius: 6px;
   margin-right: 10px;
 }
+
 .sidebar div.profile .name,
 .sidebar div.profile .job {
   font-size: 15px;
@@ -537,9 +557,11 @@ body {
   color: var(--menu-footer-text-color);
   white-space: nowrap;
 }
+
 .sidebar div.profile .job {
   font-size: 12px;
 }
+
 .sidebar .profile #log_out {
   position: absolute;
   top: 50%;
@@ -552,21 +574,26 @@ body {
   border-radius: 0px;
   transition: all 0.5s ease;
 }
+
 .sidebar.open .profile #log_out {
   width: 50px;
   background: var(--secondary-color);
   opacity: 0;
 }
+
 .sidebar.open .profile:hover #log_out {
   opacity: 1;
 }
+
 .sidebar.open .profile #log_out:hover {
   opacity: 1;
   color: red;
 }
+
 .sidebar .profile #log_out:hover {
   color: red;
 }
+
 .home-section {
   position: relative;
   background: var(--home-section-color);
@@ -577,10 +604,12 @@ body {
   transition: all 0.5s ease;
   z-index: 2;
 }
-.sidebar.open ~ .home-section {
+
+.sidebar.open~.home-section {
   left: 250px;
   width: calc(100% - 250px);
 }
+
 .home-section .text {
   display: inline-block;
   color: var(--bg-color);
@@ -588,19 +617,23 @@ body {
   font-weight: 500;
   margin: 18px;
 }
+
 .my-scroll-active {
   overflow-y: auto;
 }
+
 #my-scroll {
   overflow-y: auto;
   height: calc(100% - 60px);
 }
+
 #my-scroll::-webkit-scrollbar {
   display: none;
   /* background-color: rgba(255, 255, 255, 0.2); 
     width: 10px;
     border-radius:5px  */
 }
+
 /* #my-scroll::-webkit-scrollbar-thumb{
     background-color: red;
     border-radius:5px 
