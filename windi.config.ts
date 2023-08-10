@@ -46,6 +46,8 @@ module.exports = {
       rarly: {
         0: '#9DADB9',
         1: '#10CD45',
+        2: '#11101d',
+        3: '#1d1b31'
       }
     },
     borderRadius: {

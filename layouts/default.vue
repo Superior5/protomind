@@ -1,13 +1,7 @@
 <template>
   <div class="flex">
-    <Aside  @search-input-emit="search"/>
-    
+    <Aside />
+
     <slot />
   </div>
 </template>
-
-<script>
-</script>
-
-<style>
-</style>
