@@ -1,6 +1,6 @@
 export const useDataStore = defineStore('DataStore', {
    state: () => ({
-      count: 1,
+      isOpen: false,
    }),
 
    actions: {

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     'nuxt-windicss',
     'nuxt-icon',
     ['@pinia/nuxt', { autoImports: ['defineStore', 'acceptHMRUpdate'] }],
-
+    '@samk-dev/nuxt-vcalendar',
 
   ],
 })

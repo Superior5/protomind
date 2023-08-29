@@ -1,56 +1,66 @@
 <template>
-  <div class="w-full h-screen p-30px">
-    <div>
-      <h1 class="text-3xl font-extrabold mb-15px">Статистика</h1>
-      <div class="flex">
-        <div class="w-1/3 h-200px one bg-purple mr-15px rounded-xl flex">
-          <div class="icon-color m-20px flex items-center justify-center">
-            <i class="text-6xl bx bxs-user mr-10px"></i>
-            <div class="flex flex-col">
-              <h4 class="text-5xl font-thin">20</h4>
-              <span class="text-12px font-thin">число секретарей</span>
+  <div class="flex w-full">
+    <div class="w-1/2 h-screen p-30px">
+      <h1 class="text-3xl font-extrabold mb-25px">
+        Дашборд секретаря: Дасаев Мохаммед-Али Магомедович
+      </h1>
+
+      <Calendar
+        :dates="[
+          new Date(2023, 7, 2),
+          new Date(2023, 7, 7),
+          new Date(2023, 7, 17),
+          new Date(2023, 7, 23),
+        ]"
+      />/>
+      <div>
+        <h1 class="text-3xl font-extrabold mb-15px">
+          Статистика за последний месяц
+        </h1>
+        <div class="flex wrap">
+          <div class="w-1/3 h-200px one bg-purple mr-15px rounded-xl flex">
+            <div class="icon-color m-20px flex items-center justify-center">
+              <i class="text-6xl bx bxs-user mr-10px"></i>
+              <div class="flex flex-col">
+                <h4 class="text-5xl font-thin">45</h4>
+                <span class="text-20px font-thin">задач выполненно </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="w-1/3 h-200px two bg-base-0 mr-15px rounded-xl flex">
-          <div class="icon-color m-20px flex items-center justify-center">
-            <i class="text-6xl bx bx-user-pin mr-10px"></i>
-            <div class="flex flex-col">
-              <h4 class="text-5xl font-thin">10</h4>
-              <span class="text-12px font-thin">число менеджеров</span>
+          <div class="w-1/3 h-200px two bg-base-0 mr-15px rounded-xl flex">
+            <div class="icon-color m-20px flex items-center justify-center">
+              <i class="text-6xl bx bx-user-pin mr-10px"></i>
+              <div class="flex flex-col">
+                <h4 class="text-5xl font-thin">48</h4>
+                <span class="text-20px font-thin">протоколов занесено</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="w-1/3 h-200px three bg-base-0 mr-15px rounded-xl flex">
-          <div class="icon-color m-20px flex items-center justify-center">
-            <i class="text-6xl bx bx-conversation mr-10px"></i>
-            <div class="flex flex-col">
-              <h4 class="text-5xl font-thin">135</h4>
-              <span class="text-12px font-thin">число прошедших совещаний</span>
-            </div>
-          </div>
-        </div>
-        <div class="w-1/3 h-200px four bg-base-0 mr-0px rounded-xl flex">
-          <div class="icon-color m-20px flex items-center justify-center">
-            <i class="text-6xl bx bxs-notepad mr-10px"></i>
-            <div class="flex flex-col">
-              <h4 class="text-5xl font-thin">131</h4>
-              <span class="text-12px font-thin">число готовый протоколов</span>
+          <div class="w-1/3 h-200px three bg-base-0 rounded-xl flex">
+            <div class="icon-color m-20px flex items-center justify-center">
+              <i class="text-6xl bx bx-conversation mr-10px"></i>
+              <div class="flex flex-col">
+                <h4 class="text-5xl font-thin">51</h4>
+                <span class="text-20px font-thin">совещаний проведено</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="w-1/2 pt-30px flex flex-col">
+      <SearchBar />
+      <TaskList class="w-full h-3/5 overflow-y-scroll" />
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
 </script>
 
 <style scoped>
-
 i {
-    margin-right: 30px;
+  margin-right: 30px;
 }
 .icon-color {
   color: white;

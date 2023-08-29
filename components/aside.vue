@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'show': show }" id="aside">
+  <div :class="{ 'show': show }" class="h-screen" id="aside">
     <div class="p-14px">
       <div class="title">
         <h2>PROTOMIND</h2>
@@ -32,7 +32,7 @@ const show = ref(false)
 const menu = {
   'Дашборд': ['ic:round-grid-view', '/dashboard'],
   'Протоколы': ['material-symbols:docs', '/protocol'],
-  'Настройки': ['material-symbols:settings', '/settings']
+  'Настройки': ['material-symbols:settings', '/construction']
 }
 </script>
 
