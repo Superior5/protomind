@@ -31,7 +31,7 @@
 const show = ref(false)
 const menu = {
   'Дашборд': ['ic:round-grid-view', '/dashboard'],
-  'Протоколы': ['material-symbols:docs', '/protocol'],
+  'Протоколы': ['material-symbols:docs', '/protocols'],
   'Настройки': ['material-symbols:settings', '/construction']
 }
 </script>
