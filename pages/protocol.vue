@@ -12,8 +12,7 @@
           <div
             @click="isOpen = true"
             class="h-35px text-sm rounded-[5px] hover:opacity-50 transition-all w-65px flex justify-center items-center text-base-4 bg-rarly-1"
-          >
-            Добавить
+          >Добавить
           </div>
         </div>
       </div>
@@ -47,7 +46,7 @@
     >
       <div @click.stop class="m-20px p-20px bg-base-1" >
         <NewProtocol />
-      </div>
+     </div>
     </div>
   </div>
 </template>
