@@ -23,7 +23,6 @@ const statuses = ref({
 });
 </script>
 
-
 <style>
 .progress {
   background: red;
