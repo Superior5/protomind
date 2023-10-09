@@ -1,52 +1,50 @@
 <template>
-  <div class="w-full h-screen p-30px relative">
-    <div>
-      <div class="flex gap-10px justify-between mb-15px">
-        <h1 class="text-3xl font-extrabold">Протоколы</h1>
-        <div class="flex gap-10px children:cursor-pointer">
-          <div
-            class="h-35px rounded-[5px] text-20px hover:opacity-50 transition-all text-rarly-0 w-65px flex justify-center items-center bg-rarly-0/20"
-          >
-            <Icon name="ion:ellipsis-horizontal" />
+  <div class="w-full">
+    <div class="w-full flex justify-center mb-15px">
+      <header class="w-[80%] h-51px bg-base-8 rounded-[11px] mt-26px">
+        <div class="flex justify-between">
+          <div class="ml-100px flex items-center">
+            <h2 class="">Протоколы</h2>
           </div>
-          <div
-            @click="isOpen = true"
-            class="h-35px text-sm rounded-[5px] hover:opacity-50 transition-all w-65px flex justify-center items-center text-base-4 bg-rarly-1"
-          >
-            Добавить
+          <div class="flex">
+            <h2 class="mr-100px flex items-center">Создать новый протокол</h2>
+            <div class="flex items-center mt-7px mr-7px mb-7px">
+              <img src="@/assets/plus.svg" alt="" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="">
-        <div class="grid text-base-5 grid-cols-[2fr,1fr,1fr,1fr,1fr] p-16px">
-          <div class="">Тема</div>
-          <div class="">Секретарь</div>
-          <div class="">Дата</div>
-          <div class="">Номер протокола</div>
-          <div class="">Статус</div>
-        </div>
-        <div
-          class="grid text-sm cursor-pointer hover:opacity-50 transition-all font-medium p-16px grid-cols-[2fr,1fr,1fr,1fr,1fr]"
-          :class="{ 'bg-base-4/40': i % 2 == 0 }"
-          v-for="(protocol, i) in protocols"
-          :key="protocol.phone"
-        >
-          <div class="">{{ protocol.theme }}</div>
-          <div class="">{{ protocol.secretary }}</div>
-          <div class="">{{ protocol.date }}</div>
-          <div class="">{{ protocol.number }}</div>
-          <div class=""><StatusLabel :status="protocol.status" /></div>
-        </div>
-      </div>
+      </header>
     </div>
+    <div class="list-wrap w-[80%] my-0 mx-auto">
+      <div class="list-header w-full flex justify-evenly">
+        <div class="w-2/7 flex justify-center">
+          <h2>Тема</h2>
+        </div>
 
-    <div
-      @click="isOpen = false"
-      class="modal absolute top-0 left-0 bg-base-2 bg-opacity-10 w-full h-full"
-      v-if="isOpen"
-    >
-      <div @click.stop class="m-20px p-20px bg-base-1" >
-        <NewProtocol />
+        <div>
+          <h2>Секретарь</h2>
+        </div>
+
+        <div>
+          <h2>Дата</h2>
+        </div>
+
+        <div>
+          <h2>№Протокола</h2>
+        </div>
+
+        <div>
+          <h2>Статус</h2>
+        </div>
+      </div>
+      <div class="list-body mt-15px">
+        <div class="list-element w-full mb-14px bg-base-8 rounded-[11px] h-82px flex justify-evenly" :class="{'text-base-7' : protocol.status == 1, 'text-rarly-1' : protocol.status == 2, }" v-for="protocol in protocols" :key="protocol.date">
+          <div class="theme w-2/7">{{ protocol.theme }}</div>
+          <div class="secretary">{{ protocol.secretary }}</div>
+          <div class="date">{{ protocol.date }}</div>
+          <div class="number">{{ protocol.number }}</div>
+          <div class="status"> <status-label :status="protocol.status"/> </div>
+        </div>
       </div>
     </div>
   </div>
@@ -96,6 +94,24 @@ const isOpen = ref(false);
 </script>
 
 <style scoped>
+
+.list-element div {
+  width: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.list-element .theme {
+@apply w-2/7;
+}
+
+.list-header h2 {
+  @apply text-17px text-center text-base-7 font-bold w-120px;
+}
+header h2 {
+  @apply text-24px text-center text-base-7 font-bold;
+}
 i {
   margin-right: 30px;
 }

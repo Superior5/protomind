@@ -1,48 +1,57 @@
 <template>
-  <div :class="{ 'show': show }" class="h-screen" id="aside">
-    <div class="p-14px">
-      <div class="title">
-        <h2>PROTOMIND</h2>
-        <Icon class="cursor-pointer text-xl" @click="show = !show" name="ph:list-bold" />
+  <div class="wrapp p-26px h-screen">
+    <div :class="{ show: show }" class="h-full rounded-24px" id="aside">
+      <div class="p-14px">
+        <div class="title">
+          <h2 :class="{ block: !show, hidden: show}">PROTOMIND</h2>
+          <h2 :class="{ block: show, hidden: !show}" class="mr-10px" >P</h2>
+          <Icon
+            class="cursor-pointer text-xl"
+            @click="show = !show"
+            name="ph:list-bold"
+          />
+        </div>
+        <ul class="flex flex-col gap-5px">
+          <li v-for="(el, i) in menu" :key="i">
+            <nuxt-link
+              :to="el[1]"
+              class="h-50px px-10px flex gap-15px items-center hover:(bg-base-1/80 text-base-2) rounded-[10px] transition-all"
+            >
+              <Icon class="text-xl" style="transform: scale(1.5);" :name="el[0]" />
+              <span>{{ i }}</span>
+            </nuxt-link>
+          </li>
+        </ul>
       </div>
-      <ul class="flex flex-col gap-5px">
-        <li v-for="(el, i) in menu" :key="i">
-          <nuxt-link :to="el[1]"
-            class="h-50px px-10px flex gap-15px items-center hover:(bg-base-1/80 text-base-2) rounded-[10px] transition-all">
-            <Icon class="text-xl" :name="el[0]" />
-            <span>{{ i }}</span>
-          </nuxt-link>
-        </li>
-      </ul>
-    </div>
-    <div class="account">
-      <Icon class="text-40px" name="ic:baseline-account-box" />
-      <Icon class="text-40px absolute right-0" name="bxs:exit" />
+      <div class="account rounded-b-24px">
+        <Icon class="text-40px" name="ic:baseline-account-box" />
+        <Icon class="text-40px absolute right-0" name="bxs:exit" />
 
-      <div class="font-medium">
-        <div class="text-14px">Мохаммед-Али Дасаев</div>
-        <div class="text-12px">Менеджер</div>
+        <div class="font-medium">
+          <div class="text-14px">Мохаммед-Али Дасаев</div>
+          <div class="text-12px">Менеджер</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const show = ref(false)
+const show = ref(false);
 const menu = {
-  'Дашборд': ['ic:round-grid-view', '/dashboard'],
-  'Протоколы': ['material-symbols:docs', '/protocols'],
-  'Настройки': ['material-symbols:settings', '/construction']
-}
+  Дашборд: ["ic:round-grid-view", "/dashboard"],
+  Протоколы: ["material-symbols:docs", "/protocols"],
+  Настройки: ["material-symbols:settings", "/construction"],
+};
 </script>
 
 <style scoped>
 #aside {
-  @apply bg-rarly-2 text-base-1 w-full max-w-250px flex flex-col transition-all justify-between;
+  @apply bg-base-7 text-base-1 w-full max-w-250px flex flex-col transition-all justify-between;
 }
 
 #aside.show {
-  @apply max-w-78px;
+  @apply w-135px;
 }
 
 #aside .title {
@@ -58,7 +67,7 @@ const menu = {
 }
 
 #aside .account {
-  @apply bg-rarly-3 p-14px gap-10px flex relative items-center h-68px;
+  @apply bg-base-7 p-14px gap-10px flex relative items-center h-68px;
 }
 
 #aside .account .absolute {
@@ -69,7 +78,7 @@ const menu = {
   @apply opacity-100 text-[#ff0000];
 }
 
-#aside.show h2,
+
 #aside.show ul li a span,
 #aside.show .account *:not(.absolute) {
   @apply hidden;
@@ -84,6 +93,6 @@ const menu = {
 }
 
 #aside.show .account {
-  @apply justify-center items-center
+  @apply justify-center items-center;
 }
 </style>

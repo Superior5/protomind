@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-screen flex justify-center items-center bg-base-7">
+  <div class="w-full h-screen flex justify-center items-center">
     <div
-      class="auth-wrapper max-w-450px w-full mx-10px h-500px rounded-[30px] flex items-center bg-base-1"
+      class="auth-wrapper max-w-450px w-full mx-10px h-500px rounded-[30px] flex items-center border-20px border-base-7 bg-base-1"
     >
       <div
         class="max-w-260px mx-auto w-full flex flex-col justify-center items-center px-10px"

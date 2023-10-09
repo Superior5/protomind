@@ -1,7 +1,7 @@
 <template>
   <div>
     <span
-      class="inline-block text-center rounded-3xl align-middle w-100px h-25px"
+      class="inline-block text-center align-middle"
       :class="statuses[status].title"
       >{{ statuses[status].content }}</span
     >
@@ -14,7 +14,7 @@ const props = defineProps(["status"]);
 const statuses = ref({
   1: {
     title: "progress",
-    content: "В работе",
+    content: "В процессе",
   },
   2: {
     title: "finished",
@@ -25,10 +25,11 @@ const statuses = ref({
 
 <style>
 .progress {
-  background: red;
-  color: white;
+  
+  @apply text-base-7;
 }
 .finished {
-  background: rgb(16, 183, 16);
+  @apply text-rarly-1;
+
 }
 </style>
