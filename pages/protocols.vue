@@ -8,7 +8,7 @@
           </div>
           <div class="flex">
             <h2 class="mr-100px flex items-center">Создать новый протокол</h2>
-            <div class="flex items-center mt-7px mr-7px mb-7px cursor-pointer" @click="store.isOpen = true">
+            <div class="flex items-center mt-7px mr-7px mb-7px">
               <img src="@/assets/plus.svg" alt="" />
             </div>
           </div>
@@ -38,29 +38,27 @@
         </div>
       </div>
       <div class="list-body mt-15px">
-        <div class="list-element w-full mb-14px bg-base-8 rounded-[11px] h-82px flex justify-evenly" :class="{'text-base-7' : protocol.status == 1, 'text-rarly-1' : protocol.status == 2, }" v-for="protocol in protocols" :key="protocol.date">
+        <div
+          class="list-element w-full mb-14px bg-base-8 rounded-[11px] h-82px flex justify-evenly"
+          :class="{
+            'text-base-7': protocol.status == 1,
+            'text-rarly-1': protocol.status == 2,
+          }"
+          v-for="protocol in protocols"
+          :key="protocol.date"
+        >
           <div class="theme w-2/7">{{ protocol.theme }}</div>
           <div class="secretary">{{ protocol.secretary }}</div>
           <div class="date">{{ protocol.date }}</div>
           <div class="number">{{ protocol.number }}</div>
-          <div class="status"> <status-label :status="protocol.status"/> </div>
+          <div class="status"><status-label :status="protocol.status" /></div>
         </div>
       </div>
     </div>
-
-    <transition name="fade">
-    <div v-if="store.isOpen" class="w-[100%] h-[100%] top-0 left-0 mx-auto absolute flex justify-center items-start">
-      <div class="w-[90%] h-[90%] bg-base-8 p-30px">
-        <new-protocol/>
-      </div>
-    </div>
-    </transition>
-
   </div>
 </template>
 
 <script setup>
-const store = useDataStore();
 const protocols = [
   {
     theme: "Глобальное потепление",
@@ -104,13 +102,7 @@ const isOpen = ref(false);
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter-from, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-  opacity: 0;
-}
+
 .list-element div {
   width: 120px;
   text-align: center;
