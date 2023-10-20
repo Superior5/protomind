@@ -4,10 +4,13 @@
       <h1 class="text-center text-3xl font-extrabold mb-20px">
         Добавление протокола
       </h1>
-      <Icon
-        class="text-40px text-base-6 cursor-pointer"
-        name="material-symbols:cancel-presentation"
-      />
+      <div @click="store.isOpen = false">
+
+        <Icon
+          class="text-40px text-base-6 cursor-pointer"
+          name="material-symbols:cancel-presentation"
+        />
+      </div>
     </div>
     <div class="flex">
       <div class="w-1/2">
@@ -46,10 +49,9 @@
     </div>
     <div class="h-full flex items-end">
       <button
-        
         class="bg-rarly-1 text-base-1 p-20px text-center rounded-4px text-16px"
       >
-        Создать протокол  
+        Создать протокол
       </button>
     </div>
   </div>
@@ -66,4 +68,5 @@
 </style>
 
 <script setup>
+const store = useDataStore()
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full px-20px">
+  <div class="flex w-full px-20px mt-26px">
     <div class="h-screen w-1/2">
       <h1 class="text-3xl font-bold mb-30px">Создать аккаунт:</h1>
       <div class="input-block children:text-xl">

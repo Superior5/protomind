@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full relative">
     <div class="w-full flex justify-center mb-15px">
       <header class="w-[80%] h-51px bg-base-8 rounded-[11px] mt-26px">
         <div class="flex justify-between">
@@ -8,7 +8,7 @@
           </div>
           <div class="flex">
             <h2 class="mr-100px flex items-center">Создать новый протокол</h2>
-            <div class="flex items-center mt-7px mr-7px mb-7px">
+            <div class="flex items-center mt-7px mr-7px mb-7px cursor-pointer" @click="store.isOpen = true">
               <img src="@/assets/plus.svg" alt="" />
             </div>
           </div>
@@ -47,10 +47,20 @@
         </div>
       </div>
     </div>
+
+    <transition name="fade">
+    <div v-if="store.isOpen" class="w-[100%] h-[100%] top-0 left-0 mx-auto absolute flex justify-center items-start">
+      <div class="w-[90%] h-[90%] bg-base-8 p-30px">
+        <new-protocol/>
+      </div>
+    </div>
+    </transition>
+
   </div>
 </template>
 
 <script setup>
+const store = useDataStore();
 const protocols = [
   {
     theme: "Глобальное потепление",
@@ -94,16 +104,22 @@ const isOpen = ref(false);
 </script>
 
 <style scoped>
-
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
 .list-element div {
   width: 120px;
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 }
 .list-element .theme {
-@apply w-2/7;
+  @apply w-2/7;
 }
 
 .list-header h2 {

@@ -3,8 +3,8 @@
     <div :class="{ show: show }" class="h-full rounded-24px" id="aside">
       <div class="p-14px">
         <div class="title">
-          <h2 :class="{ block: !show, hidden: show}">PROTOMIND</h2>
-          <h2 :class="{ block: show, hidden: !show}" class="mr-10px" >P</h2>
+          <h2 :class="{ block: !show, 'hidden': show}">PROTOMIND</h2>
+          <h2 :class="{ block: show, 'hidden': !show}" class="mr-10px" >P</h2>
           <Icon
             class="cursor-pointer text-xl"
             @click="show = !show"
