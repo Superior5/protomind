@@ -9,8 +9,8 @@
     </div>
     <div class="flex children:(w-1/2 h-[70vh])">
       <div class="mr-68px">
-        <div class="w-full h-full py-30px">
-            <div class="flex flex-col gap-20px">
+        <div class="w-full h-full py-30px flex flex-col justify-between">
+            <div class="input-wrapper flex flex-col gap-20px h-full justify-between">
                <div class="w-full text-center">
                   <label for="subject" class="text-base-7 font-bold text-20px">Тема</label>
                   <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
@@ -31,12 +31,20 @@
             <button class="btn-1 text-24px px-20px py-10px mx-auto block mt-30px">Создать протокол</button>
          </div>
       </div>
-      <div class=""></div>
+      <div class=" py-30px">
+        <h2 class="text-base-7 font-bold text-20px mb-10px text-center">Выбрать дату</h2>
+        <Calendar/>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.input-wrapper div input {
+  outline: none;
+  height: 74px;
+}
 header h2 {
   font-size: 24px;
   font-weight: 700;

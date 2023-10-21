@@ -57,7 +57,9 @@
     </div>
 
     <div class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover" v-if="isOpen" @click="isOpen = false">
-      <div class="w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px" @click.stop>
+      <div class=" w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px relative" @click.stop>        
+      <h1 class="absolute top-26px font-bold select-none right-115px bg-[#e43e3e] text-[white] cursor-pointer p-14px" @click="isOpen = false">X</h1>
+        
         <new-protocol />
 
       </div>
@@ -75,9 +77,7 @@ const protocols = [
     date: "15.08.23",
     number: "555-0123",
     status: 1,
-  },
-
-  {
+  },{
     theme: "Глобальное потепление",
     secretary: "Иванова Ольга",
     date: "15.08.23",
@@ -136,7 +136,7 @@ i {
 }
 
 .icon-color {
-  color: white;
+  color: hwb(0 24% 11%);
 }
 
 .one {
