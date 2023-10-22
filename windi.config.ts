@@ -55,16 +55,19 @@ module.exports = {
         2: '#11101d',
         3: '#1d1b31',
         4: '#F5F5F5',
-        5: '#CABFE733'
+        5: '#CABFE733',
+        6: '#8757A41A'
       }
     },
     borderRadius: {
     },
     boxShadow: {
+      0: '0px 0px 21.0567px 0px rgba(144, 52, 199, 0.36)',
     },
     spacing: {
     },
     backgroundImage: {
+      0: 'linear-gradient(180deg, rgba(241, 224, 255, 0.99) 0%, #EBFAFF 100%)'
       // 0: 'url(@/assets/imgs/main-bg.jpg)',
       // 1: 'linear-gradient(45deg, rgba(0, 0, 0, 60%) 100%, transparent), url(@/assets/imgs/header-bg.jpg)',
     }
