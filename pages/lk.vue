@@ -58,17 +58,7 @@ const idUser = ref('')
 const email = ref('')
 const password = ref('')
 const occupation = ref('')
-const users = ref([
-  {
-    "_id": "6543e978c7c51fe60a780b93",
-    "name": "Атлашкин Сергей",
-    "username": "user1",
-    "login": "m.a1@gmail.com",
-    "password": "$2a$07$tUJT3SfXlhVUr2nXridWZOghPS.2z01r6MaKXkIP876BCbn8b6aJC",
-    "role": "SECRETARY",
-    "__v": 0
-  }
-])
+const users = ref([])
 
 const getUsers = async () => {
   const res = await fetch(`http://localhost:5100/api/getUsers`)

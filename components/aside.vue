@@ -22,8 +22,8 @@
         <Icon v-if="state.tokenAuth" class="text-40px absolute right-0" name="bxs:exit" />
 
         <div class="font-medium" v-if="state.tokenAuth">
-          <div class="text-14px">{{ state.userInfo.name }} {{ state.userInfo.lastName }}</div>
-          <div class="text-12px">{{ state.userInfo.jobTitle }}</div>
+          <div class="text-14px">{{ state.userInfo.name }}}</div>
+          <div class="text-12px">{{ roles[state.userInfo.role] }}</div>
         </div>
         <div class="" v-else>
           Авторизуйтесь
@@ -41,6 +41,9 @@ const menu = {
   Протоколы: ["material-symbols:docs", "/protocols"],
   Настройки: ["material-symbols:settings", "/construction"],
 };
+const roles = {
+  'SECRETARY': 'Секретарь'
+}
 </script>
 
 <style scoped>

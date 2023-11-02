@@ -50,7 +50,8 @@ const authUser = async () => {
 
   const cookieToken = useCookie('tokenAuth')
   cookieToken.value = data.token
-  console.log(jwtDecode(data.token));
+
+  state.userInfo = jwtDecode(data.token)
 
   alert("Пользователь успешно добавлен")
   navigateTo('/lk')
