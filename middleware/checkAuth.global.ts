@@ -9,4 +9,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
       return navigateTo('/auth');
     }
   }
+
+  if (to.href == '/auth' && state.tokenAuth) {
+    return navigateTo('/lk')
+  }
 });

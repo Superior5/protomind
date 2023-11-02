@@ -14,8 +14,9 @@
           <label for="remember">Запомнить меня</label>
         </div>
         <div @click="authUser" class="w-full">
-          <input class="btn-text h-40px rounded-[11px] mt-10px w-full bg-base-7 cursor-pointer" type="button"
-            value="Войти" />
+          <input :disabled="load"
+            class="btn-text disabled:opacity-50 h-40px rounded-[11px] mt-10px w-full bg-base-7 cursor-pointer"
+            type="button" value="Войти" />
         </div>
       </div>
     </div>
@@ -23,13 +24,37 @@
 </template>
 
 <script setup>
+import { jwtDecode } from "jwt-decode";
+const state = useDataStore();
 const password = ref('')
 const email = ref('')
+const load = ref(false)
 
 const authUser = async () => {
   if (!password.value || !email.value) return alert("Заполните все поля!")
-  alert("Вы авторизованы!")
+  load.value = true
+
+  const res = await fetch(`http://localhost:5100/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      password: password.value,
+      login: email.value
+    }),
+  })
+
+  const data = await res.json()
+  if (res.status != 200) return alert(data.message)
+
+  state.tokenAuth = data.token
+
   const cookieToken = useCookie('tokenAuth')
+  cookieToken.value = data.token
+  console.log(jwtDecode(data.token));
+
+  alert("Пользователь успешно добавлен")
+  navigateTo('/lk')
+  load.value = false
 }
 </script>
 
