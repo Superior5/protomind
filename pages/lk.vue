@@ -71,7 +71,7 @@ const users = ref([
 ])
 
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:5100/api/auth/getUsers`)
+  const res = await fetch(`http://localhost:5100/api/getUsers`)
   const data = await res.json()
   users.value = data.users
 }
@@ -106,6 +106,8 @@ const createUser = async () => {
   }
 
   const data = await res.json()
+  if (res.status != 200) return alert(data.message)
+
   await getUsers()
   console.log(data)
   alert("Пользователь успешно добавлен")
