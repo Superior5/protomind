@@ -1,7 +1,7 @@
 export const useDataStore = defineStore('DataStore', {
    state: () => ({
       isOpen: false,
-      tokenAuth: false,
+      tokenAuth: null,
       userInfo: {
          name: 'Мохаммед-Али',
          lastName: 'Дасаев',
