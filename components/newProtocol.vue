@@ -54,7 +54,7 @@
 <script setup>
 const video = ref(null)
 const videoName = ref('')
-const changeImg = (el, pr) => {
+const changeImg = () => {
   videoName.value = video.value.files[0].name;
 }
 

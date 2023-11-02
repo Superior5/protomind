@@ -3,20 +3,14 @@
     <div :class="{ show: show }" class="h-full rounded-24px" id="aside">
       <div class="p-14px">
         <div class="title">
-          <h2 :class="{ 'block': !show, 'hidden': show}">PROTOMIND</h2>
-          <h2 :class="{ 'block': show, 'hidden': !show}" class="mr-10px" >P</h2>
-          <Icon
-            class="cursor-pointer text-xl"
-            @click="show = !show"
-            name="ph:list-bold"
-          />
+          <h2 :class="{ 'block': !show, 'hidden': show }">PROTOMIND</h2>
+          <h2 :class="{ 'block': show, 'hidden': !show }" class="mr-10px">P</h2>
+          <Icon class="cursor-pointer text-xl" @click="show = !show" name="ph:list-bold" />
         </div>
         <ul class="flex flex-col gap-5px">
           <li v-for="(el, i) in menu" :key="i">
-            <nuxt-link
-              :to="el[1]"
-              class="h-50px px-10px flex gap-15px items-center hover:(bg-base-1/80 text-base-2) rounded-[10px] transition-all"
-            >
+            <nuxt-link :to="el[1]"
+              class="h-50px px-10px flex gap-15px items-center hover:(bg-base-1/80 text-base-2) rounded-[10px] transition-all">
               <Icon class="text-xl" style="transform: scale(1.5);" :name="el[0]" />
               <span>{{ i }}</span>
             </nuxt-link>
@@ -25,11 +19,14 @@
       </div>
       <div class="account rounded-b-24px">
         <Icon class="text-40px" name="ic:baseline-account-box" />
-        <Icon class="text-40px absolute right-0" name="bxs:exit" />
+        <Icon v-if="state.tokenAuth" class="text-40px absolute right-0" name="bxs:exit" />
 
-        <div class="font-medium">
-          <div class="text-14px">Мохаммед-Али Дасаев</div>
-          <div class="text-12px">Менеджер</div>
+        <div class="font-medium" v-if="state.tokenAuth">
+          <div class="text-14px">{{ state.userInfo.name }} {{ state.userInfo.lastName }}</div>
+          <div class="text-12px">{{ state.userInfo.jobTitle }}</div>
+        </div>
+        <div class="" v-else>
+          Авторизуйтесь
         </div>
       </div>
     </div>
@@ -37,6 +34,7 @@
 </template>
 
 <script setup>
+const state = useDataStore();
 const show = ref(false);
 const menu = {
   Дашборд: ["ic:round-grid-view", "/dashboard"],

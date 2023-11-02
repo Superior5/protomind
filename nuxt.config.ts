@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     'nuxt-icon',
     ['@pinia/nuxt', { autoImports: ['defineStore', 'acceptHMRUpdate'] }],
     '@samk-dev/nuxt-vcalendar',
-
   ],
+  router: {
+    middleware: ['checkAuth.global'],
+  },
 })

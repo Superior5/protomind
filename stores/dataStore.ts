@@ -1,12 +1,16 @@
 export const useDataStore = defineStore('DataStore', {
    state: () => ({
       isOpen: false,
+      tokenAuth: true,
+      userInfo: {
+         name: 'Мохаммед-Али',
+         lastName: 'Дасаев',
+         jobTitle: 'Менеджер'
+      }
    }),
 
    actions: {
    },
-
-
 });
 
 if (import.meta.hot) {
