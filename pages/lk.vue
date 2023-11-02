@@ -84,6 +84,7 @@ const createUser = async () => {
 
   const res = await fetch(`http://localhost:5100/api/auth/registration`, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       name: fullName.value,
       username: idUser.value,
