@@ -61,7 +61,7 @@ const occupation = ref('')
 const users = ref([])
 
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:5100/api/getUsers`)
+  const res = await fetch(`http://80.90.186.17:5100/api/getUsers`)
   const data = await res.json()
   users.value = data.users
 }
@@ -73,7 +73,7 @@ const createUser = async () => {
 
     load.value = true
 
-    const res = await fetch(`http://localhost:5100/api/auth/registration`, {
+    const res = await fetch(`http://80.90.186.17:5100/api/auth/registration`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -67,7 +67,7 @@
 const state = useDataStore();
 const isOpen = ref(false);
 
-const res = await fetch(`http://localhost:5100/api/getProtocols`)
+const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
 state.protocols = (await res.json()).protocols
 </script>
 

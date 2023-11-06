@@ -93,7 +93,7 @@ const protocol = ref(null)
 
 onMounted(async () => {
    try {
-      const res = await fetch(`http://localhost:5100/api/getProtocol/${route.params.id}`)
+      const res = await fetch(`http://80.90.186.17:5100/api/getProtocol/${route.params.id}`)
       protocol.value = (await res.json()).protocol
    } catch (error) {
 
@@ -108,7 +108,7 @@ const videoOptions = ref({
    sources: [
       {
          src:
-            'http://localhost:5100/uploads/videos/2023-11-06T14-09-43.338Z-Ren - Money Game Part 2 (Official Lyric Video) (1).mp4',
+            'http://80.90.186.17:5100/uploads/videos/2023-11-06T14-09-43.338Z-Ren - Money Game Part 2 (Official Lyric Video) (1).mp4',
          type: 'video/mp4'
       }
    ]

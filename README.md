@@ -19,7 +19,7 @@ yarn install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server on `http://80.90.186.17:3000`:
 
 ```bash
 # npm
