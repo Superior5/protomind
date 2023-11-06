@@ -38,7 +38,7 @@ const videoOptions = ref({
   sources: [
     {
       src:
-        '/video1.mp4',
+        'https://github.com/freddid/data-science/raw/main/bandicam%202020-05-26%2023-57-57-917.mp4',
       type: 'video/mp4'
     }
   ]
