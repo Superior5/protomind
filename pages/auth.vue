@@ -20,11 +20,51 @@
         </div>
       </div>
     </div>
+    <video @play="setTime(30)" ref="videoPlayer" class="video-js"></video>
+    <!-- <vue3-video-player src="/video1.mp4"></vue3-video-player> -->
+    <!-- <VideoPlayer @play="fred" ref="myVideo" :currentTime="60" height="500" src="/video1.mp4" controls :loop="true"
+      :volume="0.6" /> -->
   </div>
 </template>
 
 <script setup>
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 import { jwtDecode } from "jwt-decode";
+
+const videoPlayer = ref(null);
+let player = null;
+const videoOptions = ref({
+  autoplay: true,
+  controls: true,
+  height: 500,
+  sources: [
+    {
+      src:
+        '/video1.mp4',
+      type: 'video/mp4'
+    }
+  ]
+})
+
+const setTime = (seconds) => {
+  if (player) {
+    player.currentTime(seconds);
+  }
+};
+
+onMounted(() => {
+  player = videojs(videoPlayer.value, videoOptions.value, () => {
+    player.log('onPlayerReady', this);
+  });
+});
+
+onBeforeUnmount(() => {
+  if (player) {
+    player.dispose();
+  }
+});
+
 const state = useDataStore();
 const password = ref('')
 const email = ref('')
