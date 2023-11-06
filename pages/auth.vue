@@ -21,9 +21,6 @@
       </div>
     </div>
     <video @play="setTime(30)" ref="videoPlayer" class="video-js"></video>
-    <!-- <vue3-video-player src="/video1.mp4"></vue3-video-player> -->
-    <!-- <VideoPlayer @play="fred" ref="myVideo" :currentTime="60" height="500" src="/video1.mp4" controls :loop="true"
-      :volume="0.6" /> -->
   </div>
 </template>
 
