@@ -11,6 +11,7 @@ node_modules
 # Logs
 logs
 *.log
+*.mp4
 
 # Misc
 .DS_Store
