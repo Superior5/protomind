@@ -61,48 +61,52 @@ const occupation = ref('')
 const users = ref([])
 
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:5100/api/getUsers`)
+  const res = await fetch(`http://80.90.186.17:5100/api/getUsers`)
   const data = await res.json()
   users.value = data.users
 }
 
 const createUser = async () => {
-  if (!password.value || !email.value || !fullName.value || !occupation.value) return alert("Заполните все поля!")
-  if (password.value.length < 6) return alert("Минимальная длина пароля 6")
+  try {
+    if (!password.value || !email.value || !fullName.value || !occupation.value) return alert("Заполните все поля!")
+    if (password.value.length < 6) return alert("Минимальная длина пароля 6")
 
-  load.value = true
+    load.value = true
 
-  const res = await fetch(`http://localhost:5100/api/auth/registration`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: fullName.value,
-      username: idUser.value,
-      password: password.value,
-      role: occupation.value,
-      login: email.value
-    }),
-  })
+    const res = await fetch(`http://80.90.186.17:5100/api/auth/registration`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: fullName.value,
+        username: idUser.value,
+        password: password.value,
+        role: occupation.value,
+        login: email.value
+      }),
+    })
 
-  if (res.status == 409) {
-    alert("Такой ник уже существует. Придумайте другой")
+    if (res.status == 409) {
+      alert("Такой ник уже существует. Придумайте другой")
+      load.value = false
+      return
+    }
+
+    if (res.status == 410) {
+      alert("Такой email уже существует. Введите другой")
+      load.value = false
+      return
+    }
+
+    const data = await res.json()
+    if (res.status != 200) return alert(data.message)
+
+    await getUsers()
+    console.log(data)
+    alert("Пользователь успешно добавлен")
     load.value = false
-    return
-  }
-
-  if (res.status == 410) {
-    alert("Такой email уже существует. Введите другой")
+  } catch (error) {
     load.value = false
-    return
   }
-
-  const data = await res.json()
-  if (res.status != 200) return alert(data.message)
-
-  await getUsers()
-  console.log(data)
-  alert("Пользователь успешно добавлен")
-  load.value = false
 }
 
 onMounted(async () => {

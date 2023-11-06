@@ -2,7 +2,8 @@ export const useDataStore = defineStore('DataStore', {
    state: () => ({
       isOpen: false,
       tokenAuth: null,
-      userInfo: null
+      userInfo: null,
+      protocols: []
    }),
 
    actions: {

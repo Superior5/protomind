@@ -20,79 +20,51 @@
         </div>
       </div>
     </div>
-    <video @play="setTime(30)" ref="videoPlayer" class="video-js"></video>
   </div>
 </template>
 
 <script setup>
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
 import { jwtDecode } from "jwt-decode";
-
-const videoPlayer = ref(null);
-let player = null;
-const videoOptions = ref({
-  autoplay: true,
-  controls: true,
-  height: 500,
-  sources: [
-    {
-      src:
-        'https://github.com/freddid/data-science/raw/main/bandicam%202020-05-26%2023-57-57-917.mp4',
-      type: 'video/mp4'
-    }
-  ]
-})
-
-const setTime = (seconds) => {
-  if (player) {
-    player.currentTime(seconds);
-  }
-};
-
-onMounted(() => {
-  player = videojs(videoPlayer.value, videoOptions.value, () => {
-    player.log('onPlayerReady', this);
-  });
-});
-
-onBeforeUnmount(() => {
-  if (player) {
-    player.dispose();
-  }
-});
-
 const state = useDataStore();
 const password = ref('')
 const email = ref('')
 const load = ref(false)
 
 const authUser = async () => {
-  if (!password.value || !email.value) return alert("Заполните все поля!")
-  load.value = true
+  try {
+    if (!password.value || !email.value) return alert("Заполните все поля!")
+    load.value = true
 
-  const res = await fetch(`http://localhost:5100/api/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      password: password.value,
-      login: email.value
-    }),
-  })
+    const res = await fetch(`http://80.90.186.17:5100/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        password: password.value,
+        login: email.value
+      }),
+    })
 
-  const data = await res.json()
-  if (res.status != 200) return alert(data.message)
+    const data = await res.json()
+    if (res.status != 200) {
+      load.value = false
+      return alert(data.message)
+    }
 
-  state.tokenAuth = data.token
+    state.tokenAuth = data.token
 
-  const cookieToken = useCookie('tokenAuth')
-  cookieToken.value = data.token
+    const cookieToken = useCookie('tokenAuth')
+    cookieToken.value = data.token
 
-  state.userInfo = jwtDecode(data.token)
+    state.userInfo = jwtDecode(data.token)
 
-  alert("Пользователь успешно добавлен")
-  navigateTo('/lk')
-  load.value = false
+    alert("Пользователь успешно авторизован")
+    if (state.userInfo.role == 'ADMIN') return navigateTo('/lk')
+    navigateTo('/protocols')
+    load.value = false
+  } catch (error) {
+    load.value = false
+    console.log(error)
+  }
 }
 </script>
 

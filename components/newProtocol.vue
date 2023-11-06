@@ -13,26 +13,30 @@
           <div class="input-wrapper flex flex-col gap-20px h-full justify-between">
             <div class="w-full text-center">
               <label for="subject" class="text-base-7 font-bold text-20px">Тема</label>
-              <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+              <input required v-model="topic" type="text" name="" id="subject"
+                class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
             </div>
             <div class="w-full text-center">
               <label for="subject" class="text-base-7 font-bold text-20px">Повестка</label>
-              <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
-            </div>
-            <div class="w-full text-center">
-              <label for="subject" class="text-base-7 font-bold text-20px">Секретарь</label>
-              <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+              <input required v-model="subject" type="text" name="" id="subject"
+                class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
             </div>
             <div class="w-full text-center">
               <label for="subject" class="text-base-7 font-bold text-20px">Руководитель</label>
-              <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+              <select required v-model="director" id="subject"
+                class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px" name="">
+                <option value="-1" selected disabled>Выберите руководителя</option>
+                <option v-for="director in directors" :key="director.value" :value="director.name">{{ director.name }}
+                </option>
+              </select>
             </div>
           </div>
-          <button @click="createProtocol" class="btn-1 text-24px px-20px py-10px mx-auto block mt-30px">Создать
+          <button :disabled="load" @click="createProtocol"
+            class="btn-1 disabled:opacity-50 text-24px px-20px py-10px mx-auto block mt-30px">Создать
             протокол</button>
         </div>
       </div>
-      <div class=" py-30px">
+      <div class="flex flex-col justify-between py-30px">
         <h2 class="text-base-7 font-bold text-20px mb-10px text-center">Выбрать дату</h2>
         <Calendar />
         <div class="">
@@ -52,31 +56,73 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['close'])
+const state = useDataStore();
 const video = ref(null)
 const videoName = ref('')
+const topic = ref('')
+const subject = ref('')
+const director = ref('')
+const load = ref(false)
+
+const directors = [
+  { value: 'Oleg_Sergeevich', name: 'Олег Сергеевич' },
+  { value: 'Vasiliy_Ivanovich', name: 'Василий Иванович' },
+
+]
 const changeImg = () => {
   videoName.value = video.value.files[0].name;
 }
 
 const createProtocol = async () => {
   try {
+    if (!topic.value || !subject.value || !director.value || !videoName.value) return alert("Заполните все поля!")
+    load.value = true
+
     const formData = new FormData();
     formData.append('file', video.value.files[0])
 
-    const res = await fetch(`http://localhost:5100/api/addMedia`, {
+    const res = await fetch(`http://80.90.186.17:5100/api/addMedia`, {
       method: 'POST',
-      body: formData,
+      body: formData
     })
 
-    console.log(res);
+    const urlMedia = await res.json()
+
+    if (urlMedia) {
+      const res = await fetch(`http://80.90.186.17:5100/api/addProtocol`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          topic: topic.value,
+          subject: subject.value,
+          director: director.value,
+          secretary: state.userInfo.id,
+          video: urlMedia.links.video,
+          audio: urlMedia.links.audio
+        }),
+      })
+
+      if (res.status == 200) {
+        alert('Протокол успешно добавлен')
+        const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
+        state.protocols = (await res.json()).protocols
+        return emit('close')
+      }
+    }
+
+    load.value = false
+
   } catch (error) {
-    alert(error)
+    load.value = false
+    alert(error.message)
   }
 }
 </script>
 
 <style scoped>
-.input-wrapper div input {
+.input-wrapper div input,
+.input-wrapper div select {
   outline: none;
   height: 74px;
 }

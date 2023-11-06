@@ -67,4 +67,5 @@ const attrs = ref([
   font-size: 20px;
   font-weight: bold;
   color: #3eb1b8;
-}</style>
+}
+</style>

@@ -19,10 +19,10 @@
       </div>
       <div class="account rounded-b-24px">
         <Icon class="text-40px" name="ic:baseline-account-box" />
-        <Icon v-if="state.tokenAuth" class="text-40px absolute right-0" name="bxs:exit" />
+        <Icon @click="logout" v-if="state.userInfo" class="text-40px absolute right-0" name="bxs:exit" />
 
-        <div class="font-medium" v-if="state.tokenAuth">
-          <div class="text-14px">{{ state.userInfo.name }}}</div>
+        <div class="font-medium" v-if="state.userInfo">
+          <div class="text-14px">{{ state.userInfo.username }}</div>
           <div class="text-12px">{{ roles[state.userInfo.role] }}</div>
         </div>
         <div class="" v-else>
@@ -42,7 +42,15 @@ const menu = {
   Настройки: ["material-symbols:settings", "/construction"],
 };
 const roles = {
-  'SECRETARY': 'Секретарь'
+  'SECRETARY': 'Секретарь',
+  'ADMIN': "Админ"
+}
+const logout = () => {
+  state.tokenAuth = null
+  state.userInfo = null
+  const cookieToken = useCookie('tokenAuth')
+  cookieToken.value = null
+  navigateTo('/auth')
 }
 </script>
 
