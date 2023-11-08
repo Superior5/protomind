@@ -12,19 +12,23 @@
             <div class="flex flex-col gap-20px">
                <div class="w-full text-center">
                   <label for="subject" class="text-base-7 font-bold text-20px">Тема</label>
-                  <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+                  <input :value="protocol.topic" disabled type="text" name="" id="subject"
+                     class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
                </div>
                <div class="w-full text-center">
                   <label for="subject" class="text-base-7 font-bold text-20px">Повестка</label>
-                  <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+                  <input :value="protocol.subject" disabled type="text" name="" id="subject"
+                     class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
                </div>
                <div class="w-full text-center">
                   <label for="subject" class="text-base-7 font-bold text-20px">Секретарь</label>
-                  <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+                  <input :value="protocol.secretary.name" disabled type="text" name="" id="subject"
+                     class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
                </div>
                <div class="w-full text-center">
                   <label for="subject" class="text-base-7 font-bold text-20px">Руководитель</label>
-                  <input type="text" name="" id="subject" class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
+                  <input :value="protocol.director" disabled type="text" name="" id="subject"
+                     class="w-full mt-5px bg-rarly-5 rounded-[10px] py-10px px-20px">
                </div>
             </div>
             <button class="btn-1 text-24px px-20px py-10px mx-auto block mt-30px">Текст протокола</button>
@@ -32,22 +36,14 @@
          <div class="bg-1 w-full px-20px">
             <div class="">
                <h5 class="text-base-7 font-bold text-20px text-center py-20px">Участники</h5>
-               <div class="flex justify-between">
+               <div class="grid grid-cols-4 gap-20px">
                   <div class="text-center bg-rarly-5 rounded-[10px] p-5px text-base-7 text-sm">
                      <img src="@/assets/member.png" alt="" class="mb-5px w-full">
-                     Иванов Иван Иванович
+                     {{ protocol.secretary.name }}
                   </div>
                   <div class="text-center bg-rarly-5 rounded-[10px] p-5px text-base-7 text-sm">
                      <img src="@/assets/member.png" alt="" class="mb-5px w-full">
-                     Иванов Иван Иванович
-                  </div>
-                  <div class="text-center bg-rarly-5 rounded-[10px] p-5px text-base-7 text-sm">
-                     <img src="@/assets/member.png" alt="" class="mb-5px w-full">
-                     Иванов Иван Иванович
-                  </div>
-                  <div class="text-center bg-rarly-5 rounded-[10px] p-5px text-base-7 text-sm">
-                     <img src="@/assets/member.png" alt="" class="mb-5px w-full">
-                     Иванов Иван Иванович
+                     {{ protocol.director }}
                   </div>
                </div>
             </div>
@@ -82,6 +78,7 @@
             информационно-техническое обеспечение нашей деятельности играет важную роль в формировании дальнейших
             направлений развитая системы массового участия.
          </div>
+         <button class="btn-1 text-24px px-20px py-10px mx-auto block mt-30px">Исполнить протокол</button>
       </div>
    </div>
 </template>
@@ -89,15 +86,17 @@
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 const route = useRoute()
-const protocol = ref(null)
-
-onMounted(async () => {
-   try {
-      const res = await fetch(`http://80.90.186.17:5100/api/getProtocol/${route.params.id}`)
-      protocol.value = (await res.json()).protocol
-   } catch (error) {
-
-   }
+const protocol = ref({
+   "_id": "",
+   "topic": "",
+   "subject": "",
+   "secretary": "",
+   "director": "",
+   "date": "",
+   "video": "",
+   "audio": "",
+   "transcribe": "",
+   "__v": null
 })
 
 const videoPlayer = ref(null);
@@ -108,7 +107,7 @@ const videoOptions = ref({
    sources: [
       {
          src:
-            'http://80.90.186.17:5100/uploads/videos/2023-11-06T14-09-43.338Z-Ren - Money Game Part 2 (Official Lyric Video) (1).mp4',
+            'http://80.90.186.17:5100/' + protocol.value.video,
          type: 'video/mp4'
       }
    ]
@@ -120,10 +119,18 @@ const setTime = (seconds) => {
    }
 };
 
-onMounted(() => {
-   player = videojs(videoPlayer.value, videoOptions.value, () => {
-      player.log('onPlayerReady', this);
-   });
+onMounted(async () => {
+   try {
+      const res = await fetch(`http://80.90.186.17:5100/api/getProtocol/${route.params.id}`)
+      protocol.value = (await res.json()).protocol
+      protocol.value.secretary = JSON.parse(protocol.value.secretary)
+      videoOptions.value.sources[0].src = 'http://80.90.186.17:5100/' + protocol.value.video
+      player = videojs(videoPlayer.value, videoOptions.value, () => {
+         player.log('onPlayerReady', this);
+      });
+   } catch (error) {
+      console.log(error);
+   }
 });
 
 onBeforeUnmount(() => {
