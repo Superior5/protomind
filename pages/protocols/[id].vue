@@ -119,6 +119,8 @@ onBeforeUnmount(() => {
    }
 });
 </script>
-<style lang="">
-   
+<style>
+#protocol .video-js {
+   width: 100%;
+}
 </style>
