@@ -50,7 +50,7 @@
       <div class=" w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px relative" @click.stop>
         <h1 class="absolute top-26px font-bold select-none right-115px bg-[#e43e3e] text-[white] cursor-pointer p-14px"
           @click="isOpen = false">X</h1>
-        <new-protocol @close="isOpen = false" />
+        <new-protocol v-if="state.userInfo.role != 'ADMIN'" @close="isOpen = false" />
       </div>
     </div>
   </div>
@@ -60,7 +60,9 @@
 const state = useDataStore();
 const isOpen = ref(false);
 
-const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
+const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`, {
+  headers: { 'Authorization': 'Bear ' + state.tokenAuth }
+})
 state.protocols = (await res.json()).protocols
 state.protocols.forEach(el => {
   el.secretary = JSON.parse(el.secretary)
