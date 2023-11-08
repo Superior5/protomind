@@ -90,7 +90,7 @@ const createProtocol = async () => {
     const urlMedia = await res.json()
 
     if (urlMedia) {
-      const res1 = await fetch(`http://localhost:5200/transcribe`, {
+      const res1 = await fetch(`http://80.90.186.17:5200/transcribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
