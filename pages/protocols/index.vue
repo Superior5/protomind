@@ -20,19 +20,15 @@
         <div class="w-2/7 flex justify-center">
           <h2>Тема</h2>
         </div>
-
         <div>
           <h2>Секретарь</h2>
         </div>
-
         <div>
           <h2>Дата</h2>
         </div>
-
         <div>
           <h2>№Протокола</h2>
         </div>
-
         <div>
           <h2>Статус</h2>
         </div>
@@ -42,22 +38,19 @@
           class="list-element w-full cursor-pointer hover:opacity-50 mb-14px bg-base-8 rounded-[11px] h-82px flex justify-evenly"
           v-for="protocol in state.protocols" :key="protocol._id">
           <div class="theme w-2/7">{{ protocol.topic }}</div>
-          <div class="secretary">{{ protocol.secretary }}</div>
+          <div class="secretary">{{ protocol.secretary.name }}</div>
           <div class="date">{{ new Date(protocol.date).toLocaleString("ru") }}</div>
           <div class="number">{{ protocol._id }}</div>
           <div class="status"><status-label :status="1" /></div>
         </nuxt-link>
       </div>
     </div>
-
     <div class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover" v-if="isOpen"
       @click="isOpen = false">
       <div class=" w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px relative" @click.stop>
         <h1 class="absolute top-26px font-bold select-none right-115px bg-[#e43e3e] text-[white] cursor-pointer p-14px"
           @click="isOpen = false">X</h1>
-
         <new-protocol @close="isOpen = false" />
-
       </div>
     </div>
   </div>
@@ -69,6 +62,9 @@ const isOpen = ref(false);
 
 const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
 state.protocols = (await res.json()).protocols
+state.protocols.forEach(el => {
+  el.secretary = JSON.parse(el.secretary)
+})
 </script>
 
 <style scoped>

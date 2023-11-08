@@ -100,7 +100,6 @@ const createProtocol = async () => {
 
       const transcript = await res1.json()
 
-      console.log(transcript);
       const res = await fetch(`http://80.90.186.17:5100/api/addProtocol`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -110,7 +109,8 @@ const createProtocol = async () => {
           director: director.value,
           secretary: state.userInfo.id,
           video: urlMedia.links.video,
-          audio: urlMedia.links.audio
+          audio: urlMedia.links.audio,
+          transcribe: transcript.text
         }),
       })
 
