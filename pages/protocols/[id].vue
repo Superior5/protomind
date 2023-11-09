@@ -56,10 +56,15 @@
       <div class="bg-1 mt-20px p-20px">
          <h2 class="text-base-7 font-bold text-20px mb-30px text-center">Стенограмма С временем</h2>
          <div class="text-lg text-justify">
-            <span class="cursor-pointer hover:font-bold" @click="setTime(word.start)"
-               v-for="word in protocol.transcribe.result" :key="word.word + word.start">
-               {{ word.word }}&nbsp;
-            </span>
+            <template v-if="protocol.transcribe.result">
+               <span class="cursor-pointer hover:(text-base-6 border-b)" @click="setTime(word.start)"
+                  v-for="word in protocol.transcribe.result" :key="word.word + word.start">
+                  {{ word.word }}&nbsp;
+               </span>
+            </template>
+            <template v-else>
+               {{ protocol.transcribe }}
+            </template>
          </div>
          <button class="btn-1 text-24px px-20px py-10px mx-auto block mt-30px">Исполнить протокол</button>
       </div>
@@ -109,20 +114,27 @@ onMounted(async () => {
       protocol.value.secretary = JSON.parse(protocol.value.secretary)
       protocol.value.transcribe = JSON.parse(protocol.value.transcribe)
 
-      let newEl;
 
-      protocol.value.transcribe.result = protocol.value.transcribe.result.reduce((acc, el, i) => {
-         if (!newEl) newEl = el
-         else newEl.word += ' ' + el.word
+      if (protocol.value.transcribe) {
+         if (Array.isArray(protocol.value.transcribe)) {
+            protocol.value.transcribe = { result: protocol.value.transcribe.map(el => ({ word: el.text, start: el.result ? el.result[0].start : null })) }
+         } else {
+            let newEl;
+            protocol.value.transcribe.result = protocol.value.transcribe.result.reduce((acc, el, i) => {
+               if (!newEl) newEl = el
+               else newEl.word += ' ' + el.word
 
-         if (((1 + i) % 3 == 0) || (i == (protocol.value.transcribe.result.length - 1))) {
-            acc.push(newEl)
-            newEl = null
+               if (((1 + i) % 3 == 0) || (i == (protocol.value.transcribe.result.length - 1))) {
+                  acc.push(newEl)
+                  newEl = null
+               }
+               return acc
+            }, [])
          }
-         return acc
-      }, [])
+      }
 
       videoOptions.value.sources[0].src = 'http://80.90.186.17:5100/' + protocol.value.video
+
       player = videojs(videoPlayer.value, videoOptions.value, () => {
          player.log('onPlayerReady', this);
       });
