@@ -8,7 +8,8 @@
           </div>
           <div class="flex">
             <h2 class="mr-100px flex items-center">Создать новый протокол</h2>
-            <div class="flex items-center mt-7px mr-7px mb-7px cursor-pointer" @click="isOpen = true">
+            <div v-if="state.userInfo.role != 'ADMIN'" class="flex items-center mt-7px mr-7px mb-7px cursor-pointer"
+              @click="isOpen = true">
               <img src="@/assets/plus.svg" alt="" />
             </div>
           </div>
@@ -45,8 +46,7 @@
         </nuxt-link>
       </div>
     </div>
-    <div v-if="state.userInfo.role != 'ADMIN'"
-      class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover" v-if="isOpen"
+    <div v-if="isOpen" class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover"
       @click="isOpen = false">
       <div class=" w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px relative" @click.stop>
         <h1 class="absolute top-26px font-bold select-none right-115px bg-[#e43e3e] text-[white] cursor-pointer p-14px"
