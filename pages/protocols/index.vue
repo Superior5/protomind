@@ -45,12 +45,13 @@
         </nuxt-link>
       </div>
     </div>
-    <div class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover" v-if="isOpen"
+    <div v-if="state.userInfo.role != 'ADMIN'"
+      class="absolute top-0 right-0 w-[100%] h-[100%] flex justify-center items-center modal-cover" v-if="isOpen"
       @click="isOpen = false">
       <div class=" w-[90%] h-[90%] bg-base-1 opacity-100 rounded-[26px] px-85px relative" @click.stop>
         <h1 class="absolute top-26px font-bold select-none right-115px bg-[#e43e3e] text-[white] cursor-pointer p-14px"
           @click="isOpen = false">X</h1>
-        <new-protocol v-if="state.userInfo.role != 'ADMIN'" @close="isOpen = false" />
+        <new-protocol @close="isOpen = false" />
       </div>
     </div>
   </div>
