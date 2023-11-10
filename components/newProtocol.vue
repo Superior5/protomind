@@ -77,7 +77,7 @@ const changeImg = () => {
 const createProtocol = async () => {
   try {
     if (!topic.value || !subject.value || !director.value || !videoName.value) return alert("Заполните все поля!")
-    load.value = true
+    state.preloader = true
 
     const formData = new FormData();
     formData.append('file', video.value.files[0])
@@ -118,14 +118,18 @@ const createProtocol = async () => {
         alert('Протокол успешно добавлен')
         const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
         state.protocols = (await res.json()).protocols
+        state.preloader = false
         return emit('close')
+      } else {
+        const message = await res.json()
+        alert(message.message)
       }
     }
 
-    load.value = false
+    state.preloader = false
 
   } catch (error) {
-    load.value = false
+    state.preloader = false
     alert(error.message)
   }
 }

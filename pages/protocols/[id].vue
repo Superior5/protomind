@@ -3,8 +3,8 @@
       <div class="bg-1 relative flex justify-center">
          <h1 class="text-base-7 font-bold text-24px">Протокол 1</h1>
          <div class="absolute flex gap-15px right-60px">
-            <button class="btn-1">PDF</button>
-            <button class="btn-1">DOCX</button>
+            <button class="btn-1 opacity-50 cursor-not-allowed" disabled>PDF</button>
+            <button @click="generateDocx" class="btn-1">DOCX</button>
          </div>
       </div>
       <div class="flex gap-20px mt-20px">
@@ -55,11 +55,12 @@
       </div>
       <div class="bg-1 mt-20px p-20px">
          <h2 class="text-base-7 font-bold text-20px mb-30px text-center">Стенограмма С временем</h2>
-         <div class="text-lg text-justify">
-            <template v-if="protocol.transcribe.result">
-               <span class="cursor-pointer hover:(text-base-6 border-b)" @click="setTime(word.start)"
-                  v-for="word in protocol.transcribe.result" :key="word.word + word.start">
-                  {{ word.word }}&nbsp;
+         <div class="text-lg flex flex-wrap text-justify gap-2px">
+            <template v-if="protocol.transcribe">
+               <span class="cursor-pointer px-3px hover:(text-base-6 underline)" @click="setTime(word.start)"
+                  v-for="word in protocol.transcribe" :key="word.word + word.start"
+                  :class="{ 'bg-base-3/50': word.start <= currentTimeVideo }">
+                  {{ word.word }}
                </span>
             </template>
             <template v-else>
@@ -73,6 +74,43 @@
 <script setup>
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
+import { saveAs } from 'file-saver';
+import { Document, Packer, Paragraph, TextRun } from "docx";
+
+const generateDocx = () => {
+   const doc = new Document({
+      sections: [
+         {
+            properties: {},
+            children: [
+               new Paragraph({
+                  children: [
+                     new TextRun({
+                        text: protocol.value.topic,
+                        bold: true,
+                        size: '30pt',
+                        allCaps: true
+                     })
+                  ],
+               }),
+               new Paragraph({
+                  children: [
+                     new TextRun(protocol.value.transcribe.reduce((acc, el) => acc += el.word + ' ', ''))
+                  ],
+               }),
+            ],
+         },
+      ],
+   });
+   const mimeType =
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+   const fileName = protocol.value.topic + "_protocol.docx";
+   Packer.toBlob(doc).then((blob) => {
+      const docblob = blob.slice(0, blob.size, mimeType);
+      saveAs.saveAs(docblob, fileName);
+   });
+}
+
 const route = useRoute()
 const protocol = ref({
    "_id": "",
@@ -89,6 +127,7 @@ const protocol = ref({
 
 const videoPlayer = ref(null);
 let player = null;
+const currentTimeVideo = ref(0)
 const videoOptions = ref({
    controls: true,
    height: 315,
@@ -114,22 +153,15 @@ onMounted(async () => {
       protocol.value.secretary = JSON.parse(protocol.value.secretary)
       protocol.value.transcribe = JSON.parse(protocol.value.transcribe)
 
-
       if (protocol.value.transcribe) {
          if (Array.isArray(protocol.value.transcribe)) {
-            protocol.value.transcribe = { result: protocol.value.transcribe.map(el => ({ word: el.text, start: el.result ? el.result[0].start : null })) }
-         } else {
-            let newEl;
-            protocol.value.transcribe.result = protocol.value.transcribe.result.reduce((acc, el, i) => {
-               if (!newEl) newEl = el
-               else newEl.word += ' ' + el.word
-
-               if (((1 + i) % 3 == 0) || (i == (protocol.value.transcribe.result.length - 1))) {
-                  acc.push(newEl)
-                  newEl = null
-               }
+            protocol.value.transcribe = protocol.value.transcribe.reduce((acc, el) => {
+               if (el.text) el.result.forEach(el2 => acc.push({ word: el2.word, start: el2.start }))
                return acc
-            }, [])
+            }, []);
+
+         } else if (protocol.value.transcribe.result) {
+            protocol.value.transcribe = protocol.value.transcribe.result
          }
       }
 
@@ -138,6 +170,11 @@ onMounted(async () => {
       player = videojs(videoPlayer.value, videoOptions.value, () => {
          player.log('onPlayerReady', this);
       });
+
+      player.on('timeupdate', () => {
+         currentTimeVideo.value = player.currentTime()
+      })
+
    } catch (error) {
       console.log(error);
    }

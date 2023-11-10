@@ -3,7 +3,8 @@ export const useDataStore = defineStore('DataStore', {
       isOpen: false,
       tokenAuth: null,
       userInfo: null,
-      protocols: []
+      protocols: [],
+      preloader: false
    }),
 
    actions: {
