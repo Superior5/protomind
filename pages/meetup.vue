@@ -1,7 +1,10 @@
 <template>
    <div class="py-26px w-full flex">
-      <div class="w-full">
-         <div class=""></div>
+      <div class="w-full px-80px">
+         <div class="">
+        <Calendar/>
+
+         </div>
       </div>
       <div class="rounded-[20px] w-full max-w-450px border border-rarly-6 shadow-0 px-30px py-20px flex flex-col">
          <h2 class="text-20px text-center text-base-7 font-bold">Тема совещания</h2>
@@ -77,6 +80,21 @@ const members = ref([
 
 const filterMembers = computed(() => members.value.filter(el => el.email.includes(searchMember.value)))
 </script>
-<style lang="">
-   
+<style>
+   ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #d4d4d4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #939393;
+    border-radius: 8px;
+}
+
 </style>
