@@ -13,4 +13,9 @@ export default defineNuxtConfig({
   router: {
     middleware: ['checkAuth.global'],
   },
+  app: {
+    head: {
+      title: 'PROTOMIND',
+    }
+  }
 })
