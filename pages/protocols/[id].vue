@@ -134,7 +134,7 @@ const videoOptions = ref({
    sources: [
       {
          src:
-            'http://80.90.186.17:5100/' + protocol.value.video,
+            'https://rzd.protomy.ru/' + protocol.value.video,
          type: 'video/mp4'
       }
    ]
@@ -148,7 +148,7 @@ const setTime = (seconds) => {
 
 onMounted(async () => {
    try {
-      const res = await fetch(`http://80.90.186.17:5100/api/getProtocol/${route.params.id}`)
+      const res = await fetch(`https://rzd.protomy.ru/api/getProtocol/${route.params.id}`)
       protocol.value = (await res.json()).protocol
       protocol.value.secretary = JSON.parse(protocol.value.secretary)
       protocol.value.transcribe = JSON.parse(protocol.value.transcribe)
@@ -165,7 +165,7 @@ onMounted(async () => {
          }
       }
 
-      videoOptions.value.sources[0].src = 'http://80.90.186.17:5100/' + protocol.value.video
+      videoOptions.value.sources[0].src = 'https://rzd.protomy.ru/' + protocol.value.video
 
       player = videojs(videoPlayer.value, videoOptions.value, () => {
          player.log('onPlayerReady', this);

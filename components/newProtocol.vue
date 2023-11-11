@@ -82,7 +82,7 @@ const createProtocol = async () => {
     const formData = new FormData();
     formData.append('file', video.value.files[0])
 
-    const res = await fetch(`http://80.90.186.17:5100/api/addMedia`, {
+    const res = await fetch(`https://rzd.protomy.ru/api/addMedia`, {
       method: 'POST',
       body: formData
     })
@@ -100,7 +100,7 @@ const createProtocol = async () => {
 
       const transcript = await res1.json()
 
-      const res = await fetch(`http://80.90.186.17:5100/api/addProtocol`, {
+      const res = await fetch(`https://rzd.protomy.ru/api/addProtocol`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -116,7 +116,7 @@ const createProtocol = async () => {
 
       if (res.status == 200) {
         alert('Протокол успешно добавлен')
-        const res = await fetch(`http://80.90.186.17:5100/api/getProtocols`)
+        const res = await fetch(`https://rzd.protomy.ru/api/getProtocols`)
         state.protocols = (await res.json()).protocols
         state.preloader = false
         return emit('close')

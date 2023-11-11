@@ -37,7 +37,7 @@
 const state = useDataStore();
 const show = ref(false);
 const menu = {
-  Дашборд: ["ic:round-grid-view", "/dashboard"],
+  Дашборд: ["ic:round-grid-view", "/construction"],
   Протоколы: ["material-symbols:docs", "/protocols"],
   Настройки: ["material-symbols:settings", "/construction"],
 };
